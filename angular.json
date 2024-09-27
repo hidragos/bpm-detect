@@ -35,9 +35,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "prerender": true,
-            "ssr": false
+            "scripts": []
           },
           "configurations": {
             "production": {
