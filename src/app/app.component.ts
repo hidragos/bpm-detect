@@ -11,7 +11,12 @@ import { BpmDetectComponent } from './bpm-detect.component';
     <!-- Gradient Overlay -->
     <div class="gradient-overlay" [class.blink]="isBlinking"></div>
     <bpm-detect [(isBlinking)]="isBlinking"></bpm-detect>
-    <div class="footer">made with 💝 at github</div>
+    <a
+      class="footer"
+      href="https://github.com/hidragos/bpm-detect"
+      target="_blank"
+      >made with 💖</a
+    >
   `,
   styles: [
     `
@@ -55,6 +60,10 @@ import { BpmDetectComponent } from './bpm-detect.component';
         bottom: 4px;
         font-family: monospace;
         color: #fb3ff1;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     `,
   ],
