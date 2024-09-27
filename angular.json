@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bpm-detect": {
+    "bpm-tap": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/bpm-detect/",
+            "outputPath": "dist/bpm-tap/",
             "baseHref": "/",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -39,7 +39,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/bpm-detect/",
+              "baseHref": "/bpm-tap/",
               "budgets": [
                 {
                   "type": "initial",
@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "bpm-detect:build:production"
+              "buildTarget": "bpm-tap:build:production"
             },
             "development": {
-              "buildTarget": "bpm-detect:build:development"
+              "buildTarget": "bpm-tap:build:development"
             }
           },
           "defaultConfiguration": "development"

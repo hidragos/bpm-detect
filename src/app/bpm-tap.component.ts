@@ -1,53 +1,51 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   standalone: true,
   imports: [CommonModule],
-  selector: 'bpm-detect',
+  selector: 'bpm-tap',
   template: `
-    <div class="bpm-detector" (click)="tap()">
-      <!-- Funky BPM Display -->
-      <h1>{{ bpm }}</h1>
+    <div class="gradient-overlay" [class.blink]="isBlinking"></div>
+    <div class="container" (click)="tap()">
+      <span class="label">{{ bpm }}</span>
 
-      <!-- Gradient Button -->
       <button
-        class="btn"
         data="Reset"
+        class="reset-btn"
         (click)="reset($event)"
-        aria-label="Reset BPM Detector"
+        aria-label="Reset Counter"
       ></button>
     </div>
   `,
   styles: [
     `
       /* Container Styling */
-      .bpm-detector {
-        position: relative;
+      .container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh; /* Full viewport height */
-        width: 100vw; /* Full viewport width */
         text-align: center;
         cursor: pointer;
+        height: 100%;
         user-select: none; /* Prevent text selection */
         overflow: hidden;
         align-content: center; /* Center content vertically */
       }
 
       /* Funky BPM Display Styling */
-      h1 {
-        font-size: 400px;
+      .label {
+        font-size: clamp(20dvw, 50vw, 50dvh);
+        margin: 16px;
+        width: 100vw;
+        flex-grow: 1;
         font-weight: 700;
         background: linear-gradient(270deg, #00ffa3, #dc1fff, #00ffa3);
         background-size: 600% 600%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         animation: gradientAnimation 10s ease infinite;
-        margin: 0; /* Remove default margin */
-        padding: 0; /* Remove default padding */
         z-index: 2; /* Ensure content is above gradient overlay */
         flex-grow: 1; /* Fill remaining space */
         align-content: center; /* Center content vertically */
@@ -68,29 +66,29 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       }
 
       /* New Button Styling */
-      .btn {
+      .reset-btn {
         position: relative;
         padding: 15px 50px;
         border: none;
         outline: none;
-        border-radius: 5px;
+        border-radius: 16px;
         background: linear-gradient(to right, #00ffa3, #dc1fff);
         cursor: pointer;
         z-index: 2; /* Create a new stacking context */
         background-color: transparent; /* Ensure no background color */
         color: transparent; /* Hide default button text */
         margin-bottom: 16px;
+        overflow: hidden; /* Hide overflow for pulse animation */
       }
 
-      /* Gradient Border using ::before */
-      .btn::before {
+      .reset-btn::before {
         content: '';
         position: absolute;
         top: 1px;
         right: 1px;
         bottom: 1px;
         left: 1px;
-        border-radius: 4px; /* R1 - D = 5px - 1px = 4px */
+        border-radius: 16px; /* R1 - D = 5px - 1px = 4px */
         background-color: #3ffbd6; /* Match container's background color */
         z-index: -1; /* Place behind the button content */
         transition: opacity 200ms, top 200ms, right 200ms, bottom 200ms,
@@ -98,8 +96,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         opacity: 1;
       }
 
-      /* Gradient Text using ::after */
-      .btn::after {
+      .reset-btn::after {
         content: attr(data);
         position: absolute;
         top: 50%;
@@ -116,7 +113,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       }
 
       /* Hover Effects */
-      .btn:hover::before {
+      .reset-btn:hover::before {
         opacity: 0.5;
         top: 0px;
         right: 0px;
@@ -124,21 +121,52 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         left: 0px;
       }
 
-      .btn:hover::after {
-        /* Switch to solid white text on hover */
-        -webkit-text-fill-color: white;
-        /* Optionally, remove the gradient background */
-        background: none;
+      /* On Click Effect */
+      .reset-btn:active::before {
+        display: none;
+      }
+
+      .gradient-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: radial-gradient(
+          circle,
+          rgba(63, 173, 252, 1) 0%,
+          rgba(70, 208, 252, 1) 100%
+        );
+        opacity: 0;
+        pointer-events: none; /* Allow clicks to pass through */
+        transition: opacity 200ms ease-in-out; /* Faster transition */
+        z-index: 1; /* Ensure overlay is below content */
+      }
+
+      /* Blink Animation */
+      .blink {
+        animation: blinkAnimation 200ms ease-in-out;
+      }
+
+      @keyframes blinkAnimation {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
       }
     `,
   ],
 })
-export class BpmDetectComponent {
+export class BpmTapComponent {
   tapTimes: number[] = [];
   bpm = 0;
 
-  @Input() isBlinking = false;
-  @Output() isBlinkingChange = new EventEmitter<boolean>();
+  isBlinking = false;
 
   constructor() {
     // Listen for spacebar presses
@@ -184,11 +212,9 @@ export class BpmDetectComponent {
    */
   triggerBlink(): void {
     this.isBlinking = true;
-    this.isBlinkingChange.emit(this.isBlinking);
-    // Remove the blink class after the animation duration (150ms)
+    // Remove the blink class after the animation duration (200ms)
     setTimeout(() => {
       this.isBlinking = false;
-      this.isBlinkingChange.emit(this.isBlinking);
-    }, 150);
+    }, 200);
   }
 }
