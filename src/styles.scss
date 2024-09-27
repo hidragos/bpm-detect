@@ -9,16 +9,13 @@ body {
   padding: 0;
   box-sizing: border-box;
   overflow: hidden; /* Prevent scrollbars if not needed */
-  font-family: "Nabla", Arial, sans-serif; /* Optional: Set a default font */
+  background-color: #3ffbd6;
 }
 
 /* Ensure the root component fills the entire viewport */
 #root, /* If using React */
   app-root {
   /* For Angular projects */
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 100vh;
+  width: 100vw;
 }
