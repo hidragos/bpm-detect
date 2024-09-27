@@ -1,16 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  HostListener,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   standalone: true,
   imports: [CommonModule],
-  selector: 'bpm-counter',
+  selector: 'bpm-detect',
   template: `
     <div class="bpm-detector" (click)="tap()">
       <!-- Funky BPM Display -->
@@ -139,7 +133,7 @@ import {
     `,
   ],
 })
-export class BpmCounterComponent {
+export class BpmDetectComponent {
   tapTimes: number[] = [];
   bpm = 0;
 
@@ -154,11 +148,6 @@ export class BpmCounterComponent {
         this.tap();
       }
     });
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    // Handle any responsive adjustments if necessary
   }
 
   /**

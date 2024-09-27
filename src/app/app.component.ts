@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { BpmCounterComponent } from './bpm-counter.component';
+import { BpmDetectComponent } from './bpm-detect.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, BpmCounterComponent],
+  imports: [CommonModule, BpmDetectComponent],
   selector: 'app-root',
   template: `
     <!-- Gradient Overlay -->
     <div class="gradient-overlay" [class.blink]="isBlinking"></div>
-    <bpm-counter [(isBlinking)]="isBlinking"></bpm-counter>
+    <bpm-detect [(isBlinking)]="isBlinking"></bpm-detect>
     <div class="footer">made with 💝 at github</div>
   `,
   styles: [
