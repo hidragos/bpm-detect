@@ -67,6 +67,7 @@ import { Component } from '@angular/core';
 
       /* New Button Styling */
       .reset-btn {
+        font-family: Poppins;
         position: relative;
         padding: 15px 50px;
         border: none;
